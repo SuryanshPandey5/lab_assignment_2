@@ -1,56 +1,40 @@
 class Employee:
-    def _init_(self, emp_id, name, age, salary):
-        self.emp_id = emp_id
+    def __init__(self, employee_id, name, age, salary):
+        self.employee_id = employee_id
         self.name = name
         self.age = age
         self.salary = salary
 
-    def _str_(self):
-        return f"{self.emp_id}\t{self.name}\t{self.age}\t{self.salary}"
+    def __str__(self):
+        return f"{self.employee_id} {self.name} {self.age} {self.salary}"
 
-class EmployeeTable:
-    def _init_(self, employees):
-        self.employees = employees
+def sort_employees(employees, sorting_parameter):
+    if sorting_parameter == 1:
+        return sorted(employees, key=lambda emp: emp.age)
+    elif sorting_parameter == 2:
+        return sorted(employees, key=lambda emp: emp.name)
+    elif sorting_parameter == 3:
+        return sorted(employees, key=lambda emp: emp.salary)
+    else:
+        print("Invalid sorting parameter")
+        return employees
 
-    def print_table(self):
-        for employee in self.employees:
-            print(employee)
+def print_employee_data(employees):
+    for employee in employees:
+        print(employee)
 
-    @classmethod
-    def sort_table(cls, employees, key):
-        try:
-            if key == 1:
-                return sorted(employees, key=lambda x: x.age)
-            elif key == 2:
-                return sorted(employees, key=lambda x: x.name)
-            elif key == 3:
-                return sorted(employees, key=lambda x: x.salary)
-            else:
-                raise ValueError("Invalid sorting parameter")
-        except ValueError as e:
-            print(f"Error: {e}")
-            return employees
-
-if _name_ == "_main_":
-    employees_data = [
+if __name__ == "__main__":
+    employee_data = [
         Employee("161E90", "Ramu", 35, 59000),
         Employee("171E22", "Tejas", 30, 82100),
         Employee("171G55", "Abhi", 25, 100000),
         Employee("152K46", "Jaya", 32, 85000),
     ]
 
-    employee_table = EmployeeTable(employees_data)
+    print("Choose sorting parameter:")
+    print("1. Age\n2. Name\n3. Salary")
+    sorting_parameter = int(input("Enter the sorting parameter (1/2/3): "))
 
-    print("Employee Table:")
-    employee_table.print_table()
-
-    try:
-        sorting_parameter = int(input("\nEnter sorting parameter (1. Age, 2. Name, 3. Salary): "))
-        sorted_employees = EmployeeTable.sort_table(employee_table.employees, sorting_parameter)
-
-        print("\nSorted Employee Table:")
-        for employee in sorted_employees:
-            print(employee)
-
-    except ValueError:
-        print("Invalid input. Please enter a valid integer.")
+    sorted_employees = sort_employees(employee_data, sorting_parameter)
+    print("\nSorted Employee Data:")
+    print_employee_data(sorted_employees)
